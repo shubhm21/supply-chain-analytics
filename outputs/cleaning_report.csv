@@ -1,0 +1,9 @@
+table,issue,rows_affected,action
+products,Inconsistent category casing / trailing spaces,15,Trimmed and title-cased
+sales,Exact duplicate rows,531,Removed
+sales,Non-ISO date format (DD/MM/YYYY),2665,Parsed to ISO date
+sales,"Zero/negative quantity (entry errors, not tagged as returns)",60,Removed
+sales,Extreme quantity outliers (>5x product's 99th pct),8,Removed
+sales,Missing unit_price,400,Imputed with product list price
+sales,Rows in -> rows out,599,"133,295 -> 132,696"
+purchase_orders,Open POs (not yet received at period end),36,"Kept, excluded from delivery KPIs"

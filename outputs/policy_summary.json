@@ -1,0 +1,47 @@
+{
+  "Stockout rate (% of SKU-days)": {
+    "current": 0.06261187214611873,
+    "optimized": 0.00754337899543379,
+    "change_pct": -0.8795215869311552
+  },
+  "Fill rate (% of demand met)": {
+    "current": 0.928379378706532,
+    "optimized": 0.9905257425826817,
+    "change_pct": 0.06694069827653361
+  },
+  "Lost units": {
+    "current": 27372.0,
+    "optimized": 2227.0,
+    "change_pct": -0.9186394856057285
+  },
+  "Est. lost revenue ($)": {
+    "current": 1309737.44,
+    "optimized": 90355.81,
+    "change_pct": -0.9310122722001442
+  },
+  "Est. lost gross profit ($)": {
+    "current": 551936.15,
+    "optimized": 34682.69,
+    "change_pct": -0.9371617713389493
+  },
+  "Avg inventory value ($)": {
+    "current": 538087.603150685,
+    "optimized": 512248.1844931506,
+    "change_pct": -0.048020839926874004
+  },
+  "Annual carrying cost @25% ($)": {
+    "current": 134521.90078767124,
+    "optimized": 128062.04612328766,
+    "change_pct": -0.048020839926874004
+  },
+  "Purchase orders placed": {
+    "current": 1070.0,
+    "optimized": 894.0,
+    "change_pct": -0.16448598130841122
+  },
+  "Ordering cost @$75/PO ($)": {
+    "current": 80250.0,
+    "optimized": 67050.0,
+    "change_pct": -0.16448598130841122
+  }
+}

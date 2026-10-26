@@ -1,0 +1,15 @@
+{
+  "total_revenue": 21128847.0,
+  "gross_margin_pct": 0.38,
+  "yoy_revenue_growth_pct": -0.0201,
+  "avg_inventory_value": 565035.0,
+  "inventory_turnover": 11.59,
+  "days_of_inventory": 31.5,
+  "stockout_rate_pct": 0.0563,
+  "fill_rate_pct": 0.9429,
+  "lost_units": 48068,
+  "est_lost_revenue": 2337184.0,
+  "supplier_on_time_pct": 0.569,
+  "supplier_otif_pct": 0.5392,
+  "annual_carrying_cost_at_25pct": 141259.0
+}
