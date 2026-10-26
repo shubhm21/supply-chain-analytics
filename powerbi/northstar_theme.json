@@ -1,0 +1,31 @@
+{
+  "name": "NorthStar Supply",
+  "dataColors": ["#1F3A5F", "#2A9D8F", "#E9A23B", "#D1495B", "#9AA5B1", "#5E7CA6", "#8AB17D", "#6C4F77"],
+  "background": "#FFFFFF",
+  "foreground": "#1F2A37",
+  "tableAccent": "#1F3A5F",
+  "good": "#2A9D8F",
+  "neutral": "#E9A23B",
+  "bad": "#D1495B",
+  "maximum": "#2A9D8F",
+  "center": "#F4F1DE",
+  "minimum": "#D1495B",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1F3A5F" },
+    "callout": { "fontFace": "Segoe UI Semibold", "fontSize": 26, "color": "#1F3A5F" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#5F6B7A" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 11, "color": "#1F2A37" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "border": [{ "show": true, "color": { "solid": { "color": "#E3E7ED" } }, "radius": 8 }],
+        "dropShadow": [{ "show": false }],
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } } }]
+      }
+    },
+    "page": {
+      "*": { "background": [{ "color": { "solid": { "color": "#F5F7FA" } }, "transparency": 0 }] }
+    }
+  }
+}

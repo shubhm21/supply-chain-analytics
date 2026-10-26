@@ -1,0 +1,155 @@
+// =====================================================================
+// measures.dax  —  paste each measure into Power BI (Modeling > New measure)
+// Create a table called _Measures first (Home > Enter data > load an empty
+// table) and store all measures there to keep the model tidy.
+// =====================================================================
+
+// ---------------------------------------------------------- Date table
+// Modeling > New table. Then: Table tools > Mark as date table > Date
+dim_date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2024, 1, 1 ), DATE ( 2026, 3, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Quarter", "Q" & QUARTER ( [Date] ),
+    "Month Num", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year-Month", FORMAT ( [Date], "YYYY-MM" ),
+    "Week Ending", [Date] + 7 - WEEKDAY ( [Date], 2 )
+)
+// Sort "Month" by "Month Num" (Column tools > Sort by column)
+
+
+// ---------------------------------------------------------- Sales
+Total Revenue = SUM ( fact_sales[revenue] )
+
+Total COGS = SUM ( fact_sales[cogs] )
+
+Gross Profit = SUM ( fact_sales[gross_profit] )
+
+Gross Margin % = DIVIDE ( [Gross Profit], [Total Revenue] )
+
+Units Sold = SUM ( fact_sales[quantity] )
+
+Revenue PY =
+CALCULATE ( [Total Revenue], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+
+Revenue YoY % =
+DIVIDE ( [Total Revenue] - [Revenue PY], [Revenue PY] )
+
+
+// ---------------------------------------------------------- Inventory
+// Average of daily total inventory value across the days in context
+Avg Inventory Value =
+AVERAGEX (
+    VALUES ( fact_inventory_daily[snapshot_date] ),
+    CALCULATE ( SUM ( fact_inventory_daily[inventory_value] ) )
+)
+
+Days In Period =
+COUNTROWS ( VALUES ( fact_inventory_daily[snapshot_date] ) )
+
+// Annualised so it is comparable whether you filter a month or two years
+Inventory Turnover =
+DIVIDE ( [Total COGS], [Avg Inventory Value] ) * DIVIDE ( 365, [Days In Period] )
+
+Days of Inventory = DIVIDE ( 365, [Inventory Turnover] )
+
+Stockout Rate % = AVERAGE ( fact_inventory_daily[stockout_flag] )
+
+Stockout Days = SUM ( fact_inventory_daily[stockout_flag] )
+
+Fill Rate % =
+DIVIDE (
+    SUM ( fact_inventory_daily[sold_qty] ),
+    SUM ( fact_inventory_daily[demand_qty] )
+)
+
+Lost Units = SUM ( fact_inventory_daily[lost_units] )
+
+Lost Revenue =
+SUMX (
+    fact_inventory_daily,
+    fact_inventory_daily[lost_units] * RELATED ( dim_products[unit_price] )
+)
+
+// Create a What-if parameter "Holding Rate" (Modeling > New parameter),
+// 0.10 to 0.40, increment 0.01, default 0.25. It generates [Holding Rate Value].
+Annual Carrying Cost = [Avg Inventory Value] * [Holding Rate Value]
+
+
+// ---------------------------------------------------------- Suppliers
+// AVERAGE ignores blanks, so open (unreceived) POs are excluded automatically
+OTIF % = AVERAGE ( fact_purchase_orders[otif] )
+
+On-Time % = AVERAGE ( fact_purchase_orders[on_time] )
+
+In-Full % = AVERAGE ( fact_purchase_orders[in_full] )
+
+Avg Actual Lead Time = AVERAGE ( fact_purchase_orders[actual_lead_time_days] )
+
+Avg Promised Lead Time =
+AVERAGEX (
+    FILTER ( fact_purchase_orders, NOT ISBLANK ( fact_purchase_orders[received_date] ) ),
+    DATEDIFF ( fact_purchase_orders[order_date], fact_purchase_orders[promised_date], DAY )
+)
+
+Lead Time Gap (days) = [Avg Actual Lead Time] - [Avg Promised Lead Time]
+
+PO Spend = SUM ( fact_purchase_orders[po_value] )
+
+OTIF Target = 0.60
+
+OTIF Color =
+SWITCH (
+    TRUE (),
+    [OTIF %] < 0.45, "#D1495B",
+    [OTIF %] < 0.55, "#E9A23B",
+    "#2A9D8F"
+)
+
+
+// ---------------------------------------------------------- Replenishment
+SKUs to Reorder =
+CALCULATE ( COUNTROWS ( replenishment_plan ), replenishment_plan[action] = "REORDER NOW" )
+
+Suggested Order Value =
+SUMX (
+    replenishment_plan,
+    replenishment_plan[suggested_order_qty] * replenishment_plan[unit_cost]
+)
+
+Excess SKUs =
+CALCULATE (
+    COUNTROWS ( replenishment_plan ),
+    LEFT ( replenishment_plan[action], 6 ) = "EXCESS"
+)
+
+Excess Inventory Value = SUM ( replenishment_plan[excess_value] )
+
+Action Color =
+SWITCH (
+    SELECTEDVALUE ( replenishment_plan[action] ),
+    "REORDER NOW", "#F8D7DA",
+    "EXCESS - pause orders / promote", "#FFF3CD",
+    BLANK ()
+)
+
+
+// ---------------------------------------------------------- Forecast
+Forecast Units = SUM ( demand_forecast[forecast_units] )
+
+Weekly Demand (actual) = SUM ( fact_inventory_daily[demand_qty] )
+
+
+// ---------------------------------------------------------- ABC Pareto
+// Requires abc_class, revenue_rank columns on dim_products (see guide step 3)
+Cumulative Revenue % =
+VAR CurrentRank = MAX ( dim_products[revenue_rank] )
+RETURN
+DIVIDE (
+    CALCULATE (
+        [Total Revenue],
+        FILTER ( ALL ( dim_products ), dim_products[revenue_rank] <= CurrentRank )
+    ),
+    CALCULATE ( [Total Revenue], ALL ( dim_products ) )
+)
