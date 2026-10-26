@@ -1,0 +1,23 @@
+product_id,product_name,category,on_hand_qty,avg_daily_units_90d,days_of_cover,inventory_value,excess_value_over_60d
+P0060,Outdoor Item 060,Outdoor & Garden,1515,2.33,649.0,51162.0,46434.0
+P0069,Outdoor Item 069,Outdoor & Garden,182,1.42,128.0,14387.0,7642.0
+P0075,Outdoor Item 075,Outdoor & Garden,84,0.4,210.0,8424.0,6017.0
+P0011,Electronics Item 011,Electronics,111,0.18,624.0,4884.0,4415.0
+P0096,Office Item 096,Office Supplies,430,2.07,208.0,5865.0,4174.0
+P0115,Health Item 115,Health & Safety,148,1.18,126.0,5637.0,2946.0
+P0058,Outdoor Item 058,Outdoor & Garden,69,0.07,1035.0,2993.0,2820.0
+P0148,Packaging Item 148,Packaging,307,1.77,174.0,3838.0,2513.0
+P0099,Office Item 099,Office Supplies,143,0.33,429.0,2165.0,1862.0
+P0043,Home Item 043,Home & Kitchen,118,0.64,183.0,2661.0,1789.0
+P0063,Outdoor Item 063,Outdoor & Garden,70,0.46,154.0,2120.0,1292.0
+P0089,Office Item 089,Office Supplies,173,0.6,288.0,1358.0,1075.0
+P0137,Packaging Item 137,Packaging,172,0.54,316.0,1326.0,1074.0
+P0088,Office Item 088,Office Supplies,108,0.82,131.0,1475.0,801.0
+P0051,Home Item 051,Home & Kitchen,163,1.04,156.0,1130.0,695.0
+P0108,Office Item 108,Office Supplies,102,0.17,612.0,721.0,650.0
+P0110,Office Item 110,Office Supplies,144,0.29,498.0,605.0,532.0
+P0135,Packaging Item 135,Packaging,108,0.38,286.0,599.0,474.0
+P0122,Health Item 122,Health & Safety,96,0.62,154.0,678.0,414.0
+P0103,Office Item 103,Office Supplies,39,0.07,585.0,332.0,298.0
+P0097,Office Item 097,Office Supplies,95,0.68,140.0,172.0,98.0
+P0146,Packaging Item 146,Packaging,39,0.02,1755.0,48.0,46.0
